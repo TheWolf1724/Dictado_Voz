@@ -1,0 +1,19 @@
+# Modelos de Vosk (pesados, se descargan aparte)
+vosk-models/
+vosk-model-*/
+*.zip
+
+# Entornos virtuales
+dictado-venv/
+venv/
+.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Sistema / editor
+.DS_Store
+*.swp
+*~
