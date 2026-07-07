@@ -127,8 +127,8 @@ y cambiar PyQt5 por PySide6. *(En el horizonte.)*
 
 ## 📄 Licencia
 
-Publicado bajo **GNU AGPL v3** (ver [`LICENSE`](LICENSE)). Es copyleft: cualquier
-obra derivada debe distribuirse también bajo AGPLv3. Esta licencia viene condicionada
+Publicado bajo **GNU GPL v3** (ver [`LICENSE`](LICENSE)). Es copyleft: cualquier
+obra derivada debe distribuirse también bajo GPLv3. Esta licencia viene condicionada
 por las dependencias ([nerd-dictation](https://github.com/ideasman42/nerd-dictation)
 y [PyQt5](https://www.riverbankcomputing.com/software/pyqt/), ambas GPL).
 

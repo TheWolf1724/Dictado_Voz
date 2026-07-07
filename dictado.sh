@@ -7,9 +7,12 @@
 export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
 export DISPLAY="${DISPLAY:-:0}"
 
+# Directorio de este script (para funcionar desde cualquier ubicación).
+SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "$0")")" && pwd)"
+
 PY="$HOME/dictado-venv/bin/python"
 ND="$HOME/nerd-dictation/nerd-dictation"
-GUI="$HOME/dictado-gui.py"
+GUI="$SCRIPT_DIR/dictado-gui.py"
 
 notify() { command -v notify-send >/dev/null 2>&1 && notify-send -t 1500 -i audio-input-microphone "🎤 Dictado" "$1"; }
 
