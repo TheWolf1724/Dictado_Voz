@@ -29,46 +29,59 @@ ordenador.
 
 ## 📦 Requisitos
 
+Del **sistema** (se instalan una vez con `apt`):
+
 - Linux con **X11** (probado en KDE Plasma / Ubuntu 24.04).
-- `python3` con **PyQt5** (interfaz).
-- Un entorno virtual con **vosk** (motor de reconocimiento).
-- [`nerd-dictation`](https://github.com/ideasman42/nerd-dictation) (captura y escritura de texto).
-- `xdotool` (inyección de texto en X11) y `parec`/PipeWire-pulse (audio).
-- El **modelo español grande de Vosk** (`vosk-model-es-0.42`, ~1.4 GB) — se descarga aparte.
+- `python3` + `python3-venv`, `git`, `xdotool`, `curl`, `unzip`.
+- `parec` (de `pipewire-pulse` o `pulseaudio`) para capturar audio.
+
+El resto (**vosk**, **PyQt5**, **nerd-dictation** y el **modelo de voz** de ~1.4 GB)
+lo instala automáticamente `install.sh` dentro de la carpeta del proyecto.
 
 ---
 
-## 🚀 Instalación
+## 🚀 Instalación (automática)
+
+Todo se instala **dentro de la propia carpeta** del proyecto (entorno virtual,
+modelo y motor). No ensucia el resto del sistema.
 
 ```bash
 # 1) Dependencias del sistema (Debian/Ubuntu)
-sudo apt install python3-pyqt5 xdotool pipewire-pulse
+sudo apt install python3 python3-venv git xdotool curl unzip pipewire-pulse
 
-# 2) Motor nerd-dictation
-git clone https://github.com/ideasman42/nerd-dictation ~/nerd-dictation
-
-# 3) Entorno virtual con Vosk
-python3 -m venv ~/dictado-venv
-~/dictado-venv/bin/pip install vosk
-
-# 4) Modelo español grande de Vosk (~1.4 GB)
-mkdir -p ~/vosk-models && cd ~/vosk-models
-curl -LO https://alphacephei.com/vosk/models/vosk-model-es-0.42.zip
-unzip vosk-model-es-0.42.zip && rm vosk-model-es-0.42.zip
-
-# 5) Este proyecto
-git clone https://github.com/TheWolf1724/Dictado_Voz ~/Dictado_Voz
-cp ~/Dictado_Voz/dictado.sh        ~/dictado.sh && chmod +x ~/dictado.sh
-cp ~/Dictado_Voz/dictado-gui.py    ~/dictado-gui.py
-mkdir -p ~/.config/nerd-dictation
-cp ~/Dictado_Voz/config/nerd-dictation.py ~/.config/nerd-dictation/nerd-dictation.py
+# 2) Clona el repositorio y ejecuta el instalador
+git clone https://github.com/TheWolf1724/Dictado_Voz
+cd Dictado_Voz
+./install.sh
 ```
 
-### Atajo de teclado (KDE)
+El script `install.sh` crea el entorno virtual (con **vosk** y **PyQt5**), clona
+**nerd-dictation**, descarga el **modelo español** (~1.4 GB) y registra el lanzador
+en el menú de aplicaciones. Es **idempotente**: si lo vuelves a ejecutar, solo hace
+lo que falte.
 
-Asocia `~/dictado.sh` a un atajo global (p. ej. **Ctrl+Shift+H**) desde
-*Preferencias del Sistema → Atajos → Atajos personalizados*. Pulsar el atajo
-inicia el dictado; pulsarlo otra vez lo detiene.
+> Puedes clonar el proyecto en cualquier carpeta (por ejemplo `~/Documents/`); todo
+> funciona relativo a su propia ubicación.
+
+### Atajo de teclado global (opcional, KDE)
+
+*Preferencias del Sistema → Atajos → Atajos personalizados → Nuevo → Comando/URL
+global*. Asigna una tecla (p. ej. **Ctrl+Shift+H**) y como comando pon la ruta a
+`dictado.sh` (el instalador te la muestra al terminar). Pulsar el atajo inicia el
+dictado; pulsarlo otra vez lo detiene.
+
+### Estructura tras instalar
+
+```
+Dictado_Voz/
+├── dictado.sh              # toggle (arranca/para) + ajuste de micrófono
+├── dictado-gui.py          # interfaz flotante (PyQt5)
+├── install.sh              # instalador automático
+├── config/nerd-dictation.py   # puntuación por voz + mayúsculas
+├── venv/                   # entorno virtual (vosk + PyQt5)         [auto]
+├── nerd-dictation/         # motor de captura/escritura            [auto]
+└── models/vosk-model-es-0.42/  # modelo de voz español (~1.4 GB)   [auto]
+```
 
 ---
 

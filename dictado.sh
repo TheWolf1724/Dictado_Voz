@@ -10,8 +10,8 @@ export DISPLAY="${DISPLAY:-:0}"
 # Directorio de este script (para funcionar desde cualquier ubicación).
 SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "$0")")" && pwd)"
 
-PY="$HOME/dictado-venv/bin/python"
-ND="$HOME/nerd-dictation/nerd-dictation"
+PY="$SCRIPT_DIR/venv/bin/python"
+ND="$SCRIPT_DIR/nerd-dictation/nerd-dictation"
 GUI="$SCRIPT_DIR/dictado-gui.py"
 
 notify() { command -v notify-send >/dev/null 2>&1 && notify-send -t 1500 -i audio-input-microphone "🎤 Dictado" "$1"; }
@@ -42,5 +42,5 @@ else
     # Arrancar: corrige el micro y lanza la interfaz (que a su vez inicia el dictado).
     # setsid para que sobreviva al cierre de este script lanzado por el atajo.
     fix_mic_gain
-    setsid python3 "$GUI" >/dev/null 2>&1 < /dev/null &
+    setsid "$PY" "$GUI" >/dev/null 2>&1 < /dev/null &
 fi

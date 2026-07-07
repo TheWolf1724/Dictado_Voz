@@ -1,12 +1,9 @@
-# Modelos de Vosk (pesados, se descargan aparte)
-vosk-models/
+# Dependencias auto-contenidas (las instala/descarga install.sh, no van a git)
+venv/
+nerd-dictation/
+models/
 vosk-model-*/
 *.zip
-
-# Entornos virtuales
-dictado-venv/
-venv/
-.venv/
 
 # Python
 __pycache__/

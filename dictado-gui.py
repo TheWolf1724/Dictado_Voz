@@ -24,10 +24,12 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 Qt = QtCore.Qt
 
-HOME = os.path.expanduser("~")
-PY = os.path.join(HOME, "dictado-venv", "bin", "python")
-ND = os.path.join(HOME, "nerd-dictation", "nerd-dictation")
-MODEL = os.path.join(HOME, "vosk-models", "vosk-model-es-0.42")
+# Todo relativo a la carpeta del proyecto: auto-contenido, funciona esté donde esté.
+BASE = os.path.dirname(os.path.realpath(__file__))
+PY = os.path.join(BASE, "venv", "bin", "python")
+ND = os.path.join(BASE, "nerd-dictation", "nerd-dictation")
+MODEL = os.path.join(BASE, "models", "vosk-model-es-0.42")
+CONFIG = os.path.join(BASE, "config", "nerd-dictation.py")
 
 # --- Paleta (diseño simple y orgánico) ---
 BG = QtGui.QColor(28, 28, 34, 236)      # carbón cálido translúcido
@@ -96,9 +98,10 @@ class Overlay(QtWidgets.QWidget):
         cmd = [
             PY, ND, "begin",
             "--vosk-model-dir=%s" % MODEL,
+            "--config=%s" % CONFIG,     # puntuación por voz (auto-contenida)
             "--simulate-input-tool=XDOTOOL",
             "--continuous",
-            "--idle-time", "0.2",   # menos reproceso => menos reescrituras
+            "--idle-time", "0.2",       # menos reproceso => menos reescrituras
         ]
         try:
             self.proc = subprocess.Popen(cmd)
